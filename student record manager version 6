@@ -1,0 +1,215 @@
+import class_structure, utils, file_handler
+
+students = []
+
+def menu():
+    print('''1.  Add Student
+2.  View Student
+3.  Search Student
+4.  Delete Student
+5.  Highest Marks
+6.  Lowest Marks
+7.  Average Marks
+8.  Update Marks
+9.  Count Students
+10. Save Data
+11. Load Data
+12. Sort by marks
+13. Sort by Name
+14. Exit''')
+
+    while True:
+        try:
+            choice = int(input("What would you like to do? "))
+            break
+        except ValueError:
+            print("Enter s.no only.")
+    return choice
+
+def add_student():
+        name = utils.get_name("Enter student name: ")
+        marks = utils.get_number("Enter marks: ")
+        name = class_structure.pupils(name, marks)
+        students.append(name)
+        print("Student data added.")
+
+def view():
+
+    if len(students) > 0:
+        for index, student in enumerate(students, start=1):
+            print(index, end=". ")
+            student.show()
+
+    else:
+        print("List is empty.")
+
+def search_students():
+
+    if len(students) > 0:
+        name = utils.get_name("Enter student name: ")
+        student = utils.find_student(students, name)
+        if student is not None:
+            student.show()
+        else:
+            print("Student not found.")
+
+    else:
+        print("List is empty.")
+
+def delete_student():
+
+    if len(students) > 0:
+        name = utils.get_name("Enter student name: ")
+        student = utils.find_student(students, name)
+        if student is not None:
+            students.remove(student)
+            print("Student data deleted.")
+        else:
+            print("Student not found.")
+
+    else:
+        print("List is empty.")
+
+def highest_marks():
+
+    if len(students) > 0:
+        highest = students[0]
+        for student in students:
+            if student.marks > highest.marks:
+                highest = student
+        highest.show()
+
+    else:
+        print("List is empty.")
+
+def lowest_marks():
+
+    if len(students) > 0:
+        lowest = students[0]
+        for student in students:
+            if student.marks < lowest.marks:
+                lowest = student
+        lowest.show()
+
+    else:
+        print("List is empty.")
+
+def average_marks():
+
+    if len(students) > 0:
+        total = 0
+        divisor = len(students)
+        for student in students:
+            total += student.marks
+        average = total/divisor
+        print(f"Average marks: {average}")
+
+    else:
+        print("List is empty.")
+
+def update_marks():
+
+    if len(students) > 0:
+
+        name = utils.get_name("Enter student name: ")
+        student = utils.find_student(students, name)
+
+        if student is not None:
+            new_marks = utils.get_number("Enter new marks: ")
+            class_structure.pupils.update_mark(student, new_marks)
+            print("Marks updated.")
+        else:
+            print("Student not found.")
+
+    else:
+        print("List is empty.")
+
+def total_students():
+
+    if len(students) > 0:
+        print("Total students: ",len(students))
+
+    else:
+        print("List is empty.")
+
+def save_students():
+    file_handler.save_data(students)
+
+def load_students():
+    file_handler.load_data(students, class_structure.pupils)
+
+def sort_by_marks():
+
+    if len(students) > 0:
+        for student in students:
+            students.sort(key=lambda student: student.marks, reverse=True)
+            student.show()
+
+    else:
+        print("List is empty.")
+
+def sort_by_name():
+
+    if len(students) > 0:
+        for student in students:
+            students.sort(key=lambda student: student.name)
+            student.show()
+
+    else:
+        print("List is emtpy.")
+
+def exit_program():
+    print("Thank you for using.")
+
+def invalid():
+    print("Invalid option.")
+
+choice = 0
+while choice != 14:
+
+    choice = menu()
+
+    if choice == 1:
+        add_student()
+
+    elif choice == 2:
+        view()
+
+    elif choice == 3:
+        search_students()
+
+    elif choice == 4:
+        delete_student()
+
+    elif choice == 5:
+        highest_marks()
+
+    elif choice == 6:
+        lowest_marks()
+
+    elif choice == 7:
+        average_marks()
+
+    elif choice == 8:
+        update_marks()
+
+    elif choice == 9:
+        total_students()
+
+    elif choice == 10:
+        save_students()
+
+    elif choice == 11:
+        load_students()
+
+    elif choice == 12:
+        sort_by_marks()
+
+    elif choice == 13:
+        sort_by_name()
+
+    elif choice == 14:
+        exit_program()
+
+    else:
+        invalid()

@@ -162,7 +162,8 @@ def exit_program():
     print("Thank you for using.")
 
 def invalid():
-    print("Invalid option.")
+    print('''Invalid option.
+Enter only s.no.''')
 
 choice = 0
 while choice != 14:

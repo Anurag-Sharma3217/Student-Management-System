@@ -3,7 +3,7 @@ def get_name(message):
     while True:
         
         name = input(message)
-        if name.isalpha():
+        if name.replace(" ", "").isalpha():
             break
         print("Enter letter only.")
 
